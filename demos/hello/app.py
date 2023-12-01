@@ -15,5 +15,3 @@ def sqy_hello():
 @app.route('/greet/<name>')
 def greet(name):
     return '<h1>Hello %s!</h1>'%name
-
-
