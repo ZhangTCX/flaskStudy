@@ -90,3 +90,4 @@ def baz(n):
     return False
 #方式2
 app.jinja_env.tests["testBaz2"] = baz
+

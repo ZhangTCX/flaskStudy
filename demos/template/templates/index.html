@@ -1,15 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello Flask!</title>
-</head>
-<body>
-    <h1>Hello Flask!</h1>
+{% extends 'base.html' %}
+{% from 'macros.html' import qux%}
+<!-- super()继承基模板的内容基础上追加内容 -->
+{% block title %}
+    {{ super() }}
+    HOME
+{% endblock title %}
+<!-- 没有写super 且与基模板相同的标签则覆盖 -->
+{% block content %}
+    {% set name = "zhangjh" %}
+    <h1>Template</h1>
     <ul>
-        <li><a href="{{ url_for('watchlist') }}">&larr; watchlist</a>
+        <li><a href="{{ url_for('watchlist') }}">&larr; watchlist</a></li>
         <li><a href="{{ url_for('show') }}">&larr; show</a>
+        <li>Filter：{{ foo|myMusical }}</li>
+        <li>Global：{{ myBar() }}</li>
+        <li>Test：{% if 'baz' is testBaz %}入参是baz{% endif %}</li>
+        <li>Macro：{{ qux(amount=5) }}</li>
     </ul>
-
-</body>
-</html>
+{% endblock content %}
