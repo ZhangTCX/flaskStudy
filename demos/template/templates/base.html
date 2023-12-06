@@ -4,7 +4,12 @@
     {% block head %}
         <meta charset="UTF-8">
         <title>{% block title %}Template - HelloFlask{% endblock title %}</title>
-        {% block styles %}{% endblock styles %}
+        {% block styles %}
+            <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+            <!--  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}"> -->
+            <!-- <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}"> -->
+            <!-- 在子模板中使用宏加载静态资源 macros.html -->
+        {% endblock styles %}
     {% endblock head %}
 </head>
 <body>
@@ -12,11 +17,21 @@
         <ul><li><a href="{{ url_for('index') }}">Home</a></li></ul>
     </nav>
     <main>
+        <!-- 使用get_flashed_messages函数获取flash消息展示 -->
+        {% for message in get_flashed_messages() %}
+            <div class="alert">{{ message }}</div>
+        {% endfor %}
+
         {% block content %}{% endblock content %}
     </main>
     <footer>
         {% block footer %}{% endblock footer %}
     </footer>
-    {% block scripts %}{% endblock scripts %}
+    {% block scripts %}
+        <!-- 使用宏加载静态资源 -->
+        <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.js"></script> -->
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script> -->
+        <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
+    {% endblock scripts %}
 </body>
 </html>

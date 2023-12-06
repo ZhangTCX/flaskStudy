@@ -1,4 +1,6 @@
-from flask import Flask, render_template, Markup
+# -*- coding: utf-8 -*-
+
+from flask import Flask, render_template, Markup, flash, redirect, url_for
 
 app = Flask(__name__)
 '''
@@ -7,7 +9,16 @@ app = Flask(__name__)
 app.jinja_env.variable_start_string = "[["
 app.jinja_env.variable_end_string = "]]"
 '''
-
+'''
+了解即可，不修改也不影响
+#删除jinja2语句后的第一个空行
+app.jinja_env.trim_blocks = True
+#删除jinja2语句所在行之前的空格和制表符
+app.jinja_env.lstrip_blocks = True
+#修改静态文件的加载路径；默认是static
+app.static_url_path = 'xxxx'
+'''
+app.secret_key = 'secret string'
 
 user = {
     'username': 'zhangjh',
@@ -91,3 +102,17 @@ def baz(n):
 #方式2
 app.jinja_env.tests["testBaz2"] = baz
 
+'''
+消息闪现
+'''
+@app.route('/flash')
+def just_flash():
+    flash("你好，我是闪电")
+    return redirect(url_for("index"))
+
+'''
+自定义错误界面
+'''
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template("errors/404.html"), 404

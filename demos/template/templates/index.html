@@ -1,14 +1,23 @@
 {% extends 'base.html' %}
 {% from 'macros.html' import qux%}
+{% from 'macros.html' import static_file %}
 <!-- super()继承基模板的内容基础上追加内容 -->
 {% block title %}
     {{ super() }}
     HOME
 {% endblock title %}
 <!-- 没有写super 且与基模板相同的标签则覆盖 -->
+
+{% block styles %}
+    {{ super() }}
+    <!-- 使用宏加载静态资源 -->
+    {{ static_file("icon", 'favicon.ico') }}
+    <!-- {{ static_file("css", 'css/bootstrap.min.css') }} -->
+{% endblock styles %}
+
 {% block content %}
     {% set name = "zhangjh" %}
-    <h1>Template</h1>
+    <h1>Template {{ name }}</h1>
     <ul>
         <li><a href="{{ url_for('watchlist') }}">&larr; watchlist</a></li>
         <li><a href="{{ url_for('show') }}">&larr; show</a>
@@ -18,3 +27,10 @@
         <li>Macro：{{ qux(amount=5) }}</li>
     </ul>
 {% endblock content %}
+
+{% block scripts %}
+    <!-- 使用宏加载静态资源 -->
+    {{ static_file("js", "js/jquery-3.2.1.slim.js") }}
+    {{ static_file("js", "js/popper.min.js") }}
+    {{ static_file("js", "js/bootstrap.min.js") }}
+{% endblock scripts %}
