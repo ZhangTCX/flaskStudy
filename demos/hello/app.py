@@ -1,3 +1,4 @@
+import click
 from flask import Flask
 
 __author__ = "zhangjh"
@@ -14,23 +15,19 @@ app.config.update(
 # 读取项目配置
 value = app.config["ADMIN_NAME"]
 
-
 @app.route('/')
 def index():
     return '<h1>Hello Flask!</h1>'
-
 
 @app.route('/hi')
 @app.route('/hello')
 def sqy_hello():
     return '<h1>Hi Flask!</h1>'
 
-
 @app.route('/greet', defaults={'name': '游客'})
 @app.route('/greet/<name>')
 def greet(name):
     return f'<h1>Hello {name}!</h1>'
-
 
 '''
 Flask命令：

@@ -26,21 +26,17 @@ movies = [
     {'name': 'CoCo', 'year': '2017'},
 ]
 
-
 @app.route('/')
 def index():
     return render_template("index.html")
-
 
 @app.route('/watchlist')
 def watchlist():
     return render_template("watchlist.html", user=user, movies=movies)
 
-
 @app.route('/watchlist_styles')
 def watchlist_styles():
     return render_template('watchlist_styles.html', user=user, movies=movies)
-
 
 """
 内置上下文变量(Flask提供)
@@ -55,8 +51,6 @@ g 与请求绑定的全局变量，在已激活的请求环境下可用
 这些返回值会被添加到模板中，因此我们可以在模板中直接使用。
 (字符串，列表，函数，类或类实例)
 """
-
-
 @app.context_processor
 def inject_foo1():
     """
@@ -65,23 +59,18 @@ def inject_foo1():
     foo = 'foo'
     return dict(foo=foo)  # 等同于 return {'foo':foo}
 
-
 def inject_foo2():
     """
     第二种用法
     """
     eoo = 'eoo'
     return dict(eoo=eoo)
-
-
 app.context_processor(inject_foo2)
-
 
 """
 第三种用法：lambda写法
 """
 app.context_processor(lambda: {"uoo": "baz"})
-
 
 '''
 内置全局函数(Jinja2提供)
@@ -97,13 +86,10 @@ get_flashed_messages() 用于获取flash消息的函数
 app.template_global(name) 可以自定义名称 
 如：@app.template_global('barr') 那么在模板就是{{ barr() }}进行使用
 '''
-
-
 @app.template_global()
 def bar():
     return '测试bar.'
 # 也可以这样添加：app.jinja_env.globals['bar'] = bar
-
 
 '''
 内置过滤器(Jinja2提供)
@@ -118,14 +104,11 @@ http://jinja.pocoo.org/docs/2.10/templates/#builtin-filters   --完整的过滤�
 app.template_filter(name) 可以自定义名称 
 如：@app.template_filter('check') 那么在模板就是{{ text|check }}进行使用
 '''
-
-
 @app.template_filter()
 def musical(s):
     return s + Markup(' &#9835;')  # Markup标记为安全，避免转义 同时在模板中使用 {{ text|safe }}也可以标记为安全
 # 也可以这样添加自定义过滤器：app.jinja_env.filters["musical"] = musical
 # 使用方式：{{ name|musical }}
-
 
 '''
 内置测试器(Jinja2提供)
@@ -137,15 +120,12 @@ app.template_test(name) 可以自定义名称
 如：@app.template_filter('test') 
 那么在模板就是 {% if foo is test() %} 或者 {% if foo is test %} 进行使用
 '''
-
-
 @app.template_test()
 def baz(value):
     if value == 'baz':
         return True
     return False
 # 也可以这样添加自定义测试器：app.jinja_env.tests["baz"] = baz
-
 
 '''
 模板环境对象：了解即可，不建议修改，容易出现兼容问题
@@ -164,7 +144,6 @@ app.jinja_env.lstrip_blocks = True
 #修改静态文件的加载路径；默认是static
 app.static_url_path = 'xxxx'
 '''
-
 
 '''
 模板结构：
@@ -211,14 +190,11 @@ app.jinja_env.lstrip_blocks = True #删除所在行之前的空格和制表符
 '''
 消息闪现：flash()函数发送的消息会存储在session中
 '''
-
-
 @app.route('/flash')
 def just_flash():
     flash('你好，我是闪电，欢迎登陆1')
     flash('你好，我是闪电，欢迎登陆2')
     return redirect(url_for('index'))
-
 
 '''
 自定义错误页面
@@ -226,13 +202,10 @@ app.errorhandler(错误状态码或者异常类)  如：@app.errorhandler(NameEr
 当发生错误时，对应的错误处理函数就会被调用
 参数e是异常类，该异常类的常用属性: code-错误码 name-原因短语 description-错误描述 （注意500的错误通常不会提供这几个属性，需要手动编写）
 '''
-
-
 # 404 error handler
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('errors/404.html', errorcode=e.code, errormsg=e.name, note=e.description), 404
-
 
 # 500 error handler
 @app.errorhandler(500)

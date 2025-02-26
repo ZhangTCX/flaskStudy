@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% block head %}
+        <meta charset="utf-8">
+        <title>
+            {% block title %}Home - HelloFlask{% endblock title %}
+        </title>
+        <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        {% block styles %}
+            <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css' ) }}">
+            <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css' ) }}">
+        {% endblock styles %}
+    {% endblock head %}
+</head>
+<body>
+<main>
+    <!-- 主体 -->
+    {% block content %}{% endblock content %}
+</main>
+<footer>
+    <!-- 页脚 -->
+    {% block footer %}{% endblock %}
+</footer>
+{% block scripts %}
+<!-- 使用宏加载静态资源(也支持CDN加载资源，调整入参) -->
+<!--{{ static_file('js', 'js/jquery-3.2.1.slim.min.js') }}-->
+<!--{{ static_file('js', 'js/popper.min.js') }}-->
+<!--{{ static_file('js', 'js/bootstrap.min.js') }}-->
+<script src="{{ url_for('static', filename='js/jquery-3.2.1.slim.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+{% endblock scripts %}
+</body>
+</html>
