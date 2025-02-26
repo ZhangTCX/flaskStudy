@@ -1,24 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <title>{{ user.username }}'s Watchlist</title>
 </head>
 <body>
-    <a href="{{ url_for('index') }}">&larr; Return</a>
-    <img src="{{ url_for('static', filename='avatar.jpg') }}" width="50">
-    <h2>{{ user.username }}</h2>
-    {% if user.bio %}
-        <i>{{ user.bio }}</i>
-    {% else %}
-        <i>该用户未提供个人简介</i>
-    {% endif %}
-    <h5>{{ user.username }}'s Watchlist ({{ movies|length }}):</h5>
-    <ul>
-        {% for movie in movies %}
-            <li>{{ movie.name }} - {{ movie.year }}</li>
-        {% endfor %}
-    </ul>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+{# 注释:url_for()是Flask提供内置模板全局函数 #}
+<a href="{{ url_for('index') }}">&rarr; Return</a>
+<h2>{{ user.username|title }}</h2>
+{# 注释:内置上下文变量(自定义上下文)---------------------------------------------------------------------------- #}
+<h3>{{ foo }}</h3>
+<h3>{{ eoo }}</h3>
+<h3>{{ uoo }}</h3>
+{# 注释:自定义全局函数---------------------------------------------------------------------------------------- #}
+<h3>{{ bar() }}</h3>
+{# 注释:自定义过滤器------------------------------------------------------------------------------------------ #}
+<h1>{{ name|default('过滤器测试')|title|musical }}</h1>
+{# 注释:自定义测试器------------------------------------------------------------------------------------------ #}
+{% if foo is baz() %}
+    <h3>自定义测试器测试匹配上1</h3>
+{% else %}
+    <h3>自定义测试器测试未匹配1</h3>
+{% endif %}
+{% if uoo is baz %}
+    <h3>自定义测试器测试匹配上2</h3>
+{% else %}
+    <h3>自定义测试器测试未匹配2</h3>
+{% endif %}
+{# 注释:用户信息------------------------------------------------------------------------------------------ #}
+{% if user.bio %}
+    <i>{{ user.bio }}</i>
+{% else %}
+    <i>这位用户没有电影清单</i>
+{% endif %}
+{# 注释:电影清单------------------------------------------------------------------------------------------ #}
+<h5>{{ user.username }}'s Watchlist ({{ movies|length }}):</h5>
+<ul>
+    {% for movie in movies %}
+    <li>{{ movie.name }} - {{ movie.year }}</li>
+    {% endfor %}
+</ul>
+{# 注释:局部模板导入------------------------------------------------------------------------------------------ #}
+{% include '_banner.html' %}
+
+{# 注释:宏模板导入-------------------------------------------------------------------------------------------- #}
+{% from 'macros.html' import qux with context %}
+{{ qux(5) }}
+{# 注释:不写with context报错 #}
+{% from 'macros.html' import test with context %}
+{{ test() }}
 </body>
 </html>

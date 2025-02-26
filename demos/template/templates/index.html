@@ -1,36 +1,45 @@
 {% extends 'base.html' %}
-{% from 'macros.html' import qux%}
-{% from 'macros.html' import static_file %}
-<!-- super()继承基模板的内容基础上追加内容 -->
-{% block title %}
-    {{ super() }}
-    HOME
-{% endblock title %}
-<!-- 没有写super 且与基模板相同的标签则覆盖 -->
 
+{# 注释:宏模板导入 #}
+{% from 'macros.html' import qux with context %}
+
+{# 注释:子模板覆盖内容 #}
+{% block title %}zhangjh - HelloFlask{% endblock title %}
+
+{# 注释:子模板追加内容 #}
 {% block styles %}
-    {{ super() }}
-    <!-- 使用宏加载静态资源 -->
-    {{ static_file("icon", 'favicon.ico') }}
-    <!-- {{ static_file("css", 'css/bootstrap.min.css') }} -->
+{{ super() }}
+<style>
+    .foo {
+        color: red;
+    }
+</style>
 {% endblock styles %}
 
+{# 注释:子模板块content 覆盖 父模板块content #}
 {% block content %}
-    {% set name = "zhangjh" %}
-    <h1>Template {{ name }}</h1>
-    <ul>
-        <li><a href="{{ url_for('watchlist') }}">&larr; watchlist</a></li>
-        <li><a href="{{ url_for('show') }}">&larr; show</a>
-        <li>Filter：{{ foo|myMusical }}</li>
-        <li>Global：{{ myBar() }}</li>
-        <li>Test：{% if 'baz' is testBaz %}入参是baz{% endif %}</li>
-        <li>Macro：{{ qux(amount=5) }}</li>
-    </ul>
-{% endblock content %}
 
-{% block scripts %}
-    <!-- 使用宏加载静态资源 -->
-    {{ static_file("js", "js/jquery-3.2.1.slim.js") }}
-    {{ static_file("js", "js/popper.min.js") }}
-    {{ static_file("js", "js/bootstrap.min.js") }}
-{% endblock scripts %}
+{# 注释:使用set在模板中定义变量(2种方式) #}
+{% set name='baz' %}
+{% set name1 %}
+    baz1
+{% endset %}
+
+<h1>Template</h1>
+<ul>
+    <li><a href="{{ url_for('watchlist') }}">Watchlist</a></li>
+    <li><a href="{{ url_for('watchlist_styles') }}">Watchlist_styles</a></li>
+    <li>自定义过滤器: {{ foo|musical }}</li>
+    <li>自定义全局函数: {{ bar() }}</li>
+    <li>自定义测试:
+        {% if foo is baz() %}
+            自定义测试器测试匹配上
+        {% else %}
+            自定义测试器测试未匹配
+        {% endif %}
+    </li>
+    <li>模板中定义变量: {{ name }}, {{ name1 }}</li>
+    <li>宏模板使用: {{ qux(amount=5) }}</li>
+    <li><a href="{{ url_for('just_flash') }}">消息闪现</a></li>
+</ul>
+{% endblock content%}

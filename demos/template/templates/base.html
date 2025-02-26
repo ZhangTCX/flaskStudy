@@ -1,37 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+{% from 'macros.html' import static_file %}
+<html>
 <head>
     {% block head %}
-        <meta charset="UTF-8">
-        <title>{% block title %}Template - HelloFlask{% endblock title %}</title>
+        <meta charset="utf-8">
+        <title>
+            {% block title %}Home - HelloFlask{% endblock title %}
+        </title>
+        <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
         {% block styles %}
-            <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
-            <!--  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}"> -->
-            <!-- <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}"> -->
-            <!-- 在子模板中使用宏加载静态资源 macros.html -->
+            <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css' ) }}">
+            <!-- 使用宏加载静态资源(也支持CDN加载资源，调整入参) -->
+            {{ static_file('css', 'css/bootstrap.min.css') }}
         {% endblock styles %}
     {% endblock head %}
 </head>
 <body>
-    <nav>
-        <ul><li><a href="{{ url_for('index') }}">Home</a></li></ul>
-    </nav>
-    <main>
-        <!-- 使用get_flashed_messages函数获取flash消息展示 -->
-        {% for message in get_flashed_messages() %}
-            <div class="alert">{{ message }}</div>
-        {% endfor %}
-
-        {% block content %}{% endblock content %}
-    </main>
-    <footer>
-        {% block footer %}{% endblock footer %}
-    </footer>
-    {% block scripts %}
-        <!-- 使用宏加载静态资源 -->
-        <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.js"></script> -->
-        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script> -->
-        <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
-    {% endblock scripts %}
+<nav>
+    <ul><li><a href="{{ url_for('index') }}">Home</a></li></ul>
+</nav>
+<main>
+    <!-- 消息闪现提示 因为有可能有多条 所以使用for循环进行显示，
+         使用get_flashed_messages()获取后 该提示就会被消除，
+         刷新页面后不会再显示 -->
+    {% for message in get_flashed_messages() %}
+        <div class="alert">{{ message }}</div>
+    {% endfor %}
+    <!-- 主体 -->
+    {% block content %}{% endblock content %}
+</main>
+<footer>
+    {% block footer %}
+        ----------------------------------------页脚----------------------------------------
+    {% endblock %}
+</footer>
+{% block scripts %}
+<!-- 使用宏加载静态资源(也支持CDN加载资源，调整入参) -->
+<!--{{ static_file('js', 'js/jquery-3.2.1.slim.min.js') }}-->
+<!--{{ static_file('js', 'js/popper.min.js') }}-->
+<!--{{ static_file('js', 'js/bootstrap.min.js') }}-->
+<script src="{{ url_for('static', filename='js/jquery-3.2.1.slim.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+{% endblock scripts %}
 </body>
 </html>

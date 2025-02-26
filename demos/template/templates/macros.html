@@ -1,12 +1,16 @@
 {% macro qux(amount=1) %}
     {% if amount == 1 %}
-        I am qux.
+        一个人
     {% elif amount > 1 %}
-        We are quxs.
+        多个人
     {% endif %}
 {% endmacro %}
 
-<!-- local=True加载本地资源 False可以传入CDN地址加载 -->
+{% macro test() %}
+    <h1>{{ user.with_context }}</h1>
+{% endmacro %}
+
+{# 注释：local=True代表本地资源 local=False 那么就要filename_or_url送加载资源的url #}
 {% macro static_file(type, filename_or_url, local=True) %}
     {% if local -%}
         {% set filename_or_url = url_for('static', filename=filename_or_url) %}
