@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+<!--suppress HtmlUnknownTarget -->
+{% from 'macros.html' import form_field with context %}
+
+<head>
+    {{ ckeditor.load() }}
+</head>
+
+{% block content %}
+    <a href="{{ url_for('index') }}">&rarr; Return</a>
+    <h2>Integrate CKEditor with Flask-CKEditor</h2>
+    <form method="post">
+        {{ form.csrf_token }}  <!-- 渲染CSRF令牌隐藏字段(如果没有渲染会验证报错: CSRF token is missing) -->
+        {{ form_field(form.title) }}
+        {{ form_field(form.body) }}
+        {{ form.submit }}
+    </form>
+{% endblock content %}
+
+{% block scripts %}
+    {{ super() }}
+    {{ ckeditor.load() }}
+    {{ ckeditor.config(name='body') }} <!-- 要在ckeditor.load()之后调用 -->
+{% endblock scripts %}

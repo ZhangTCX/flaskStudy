@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
-
+<!--suppress HtmlUnknownTarget -->
 {# 注释:宏模板导入 #}
 {% from 'macros.html' import qux with context %}
+{% from 'macros.html' import static_file with context %}
 
 {# 注释:子模板覆盖内容 #}
 {% block title %}zhangjh - HelloFlask{% endblock title %}
@@ -25,21 +26,23 @@
     baz1
 {% endset %}
 
-<h1>Template</h1>
-<ul>
-    <li><a href="{{ url_for('watchlist') }}">Watchlist</a></li>
-    <li><a href="{{ url_for('watchlist_styles') }}">Watchlist_styles</a></li>
-    <li>自定义过滤器: {{ foo|musical }}</li>
-    <li>自定义全局函数: {{ bar() }}</li>
-    <li>自定义测试:
-        {% if foo is baz() %}
-            自定义测试器测试匹配上
-        {% else %}
-            自定义测试器测试未匹配
-        {% endif %}
-    </li>
-    <li>模板中定义变量: {{ name }}, {{ name1 }}</li>
-    <li>宏模板使用: {{ qux(amount=5) }}</li>
-    <li><a href="{{ url_for('just_flash') }}">消息闪现</a></li>
-</ul>
-{% endblock content%}
+<div class="container">
+    <h1>Template</h1>
+    <ul>
+        <li><a href="{{ url_for('watchlist') }}">Watchlist</a></li>
+        <li><a href="{{ url_for('watchlist_styles') }}">Watchlist_styles</a></li>
+        <li>自定义过滤器: {{ foo|musical }}</li>
+        <li>自定义全局函数: {{ bar() }}</li>
+        <li>自定义测试:
+            {% if foo is baz() %}
+                自定义测试器测试匹配上
+            {% else %}
+                自定义测试器测试未匹配
+            {% endif %}
+        </li>
+        <li>模板中定义变量: {{ name }}, {{ name1 }}</li>
+        <li>宏模板使用: {{ qux(amount=5) }}</li>
+        <li><a href="{{ url_for('just_flash') }}">消息闪现</a></li>
+    </ul>
+    {% endblock content%}
+</div>

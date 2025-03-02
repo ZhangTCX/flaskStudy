@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+<!--suppress HtmlUnknownTarget -->
+{% from 'macros.html' import form_field with context %}
+{% block content %}
+    <a href="{{ url_for('index') }}">&rarr; Return</a>
+    <h2>Basic Macros Form</h2>
+    <form method="post">
+        {{ form.csrf_token }}  <!-- 渲染CSRF令牌隐藏字段(如果没有渲染会验证报错: CSRF token is missing) -->
+        {{ form_field(form.username) }}
+        {{ form_field(form.password) }}
+        {{ form.submit }}
+    </form>
+{% endblock content %}
+

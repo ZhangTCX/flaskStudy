@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+<!--suppress HtmlUnknownTarget -->
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+{% endblock styles %}
+
+{% block nav %}{% endblock nav%}
+
+{% block content %}
+    <div class="container">
+        <a href="{{ url_for('index') }}">&rarr; Return</a>
+        <h2>Bootstrap Style Form</h2>
+        <form method="post">
+            {{ form.csrf_token }}  <!-- 渲染CSRF令牌隐藏字段(如果没有渲染会验证报错: CSRF token is missing) -->
+            <div class="form-group">
+                {{ form.username.label }}
+                {{ form.username(class='form-control', required='') }}
+            </div>
+            <div class="form-group">
+                {{ form.password.label }}
+                {{ form.password(class='form-control', required='') }}
+            </div>
+            <div class="form-check">
+                {{ form.remember(class='form-check-input') }}
+                {{ form.remember.label }}
+            </div>
+            {{ form.submit(class='btn btn-primary') }}
+        </form>
+    </div>
+{% endblock content %}
+

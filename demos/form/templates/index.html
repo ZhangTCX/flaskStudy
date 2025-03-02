@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+<!--suppress HtmlUnknownTarget -->
+{% block content %}
+  <ul>
+    <li><a href="{{ url_for('basic') }}">Basic</a></li>
+    <li><a href="{{ url_for('basic_macros') }}">Basic Macros</a></li>
+    <li><a href="{{ url_for('bootstrap') }}">Bootstrap</a></li>
+    <li><a href="{{ url_for('forty_two_form') }}">Forty Two Form</a></li>
+    <li><a href="{{ url_for('upload') }}">Upload Form</a></li>
+    <li><a href="{{ url_for('multi_upload') }}">Multi Upload Form</a></li>
+    <li><a href="{{ url_for('integrate_ckeditor') }}">CKEditor Form</a></li>
+    <li><a href="{{ url_for('two_submits') }}">Two Submits Form</a></li>
+    <li><a href="{{ url_for('multi_form') }}">Multi Submits Form</a></li>
+    <li><a href="{{ url_for('multi_from_multi_view') }}">Multi Form Multi View</a></li>
+  </ul>
+{% endblock content %}

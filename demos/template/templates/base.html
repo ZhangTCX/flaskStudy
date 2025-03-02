@@ -1,5 +1,6 @@
+<!--suppress HtmlUnknownTarget -->
 <!DOCTYPE html>
-{% from 'macros.html' import static_file %}
+{% from 'macros.html' import static_file with context %}
 <html>
 <head>
     {% block head %}
@@ -32,16 +33,16 @@
 <footer>
     {% block footer %}
         ----------------------------------------页脚----------------------------------------
-    {% endblock %}
+    {% endblock footer %}
 </footer>
 {% block scripts %}
-<!-- 使用宏加载静态资源(也支持CDN加载资源，调整入参) -->
-<!--{{ static_file('js', 'js/jquery-3.2.1.slim.min.js') }}-->
-<!--{{ static_file('js', 'js/popper.min.js') }}-->
-<!--{{ static_file('js', 'js/bootstrap.min.js') }}-->
-<script src="{{ url_for('static', filename='js/jquery-3.2.1.slim.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <!-- 使用宏加载静态资源(也支持CDN加载资源，调整入参) -->
+    <!--{{ static_file('js', 'js/jquery-3.2.1.slim.min.js') }}-->
+    <!--{{ static_file('js', 'js/popper.min.js') }}-->
+    <!--{{ static_file('js', 'js/bootstrap.min.js') }}-->
+    <script src="{{ url_for('static', filename='js/jquery-3.2.1.slim.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 {% endblock scripts %}
 </body>
 </html>

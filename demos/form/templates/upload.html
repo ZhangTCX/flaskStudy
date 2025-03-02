@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+<!--suppress HtmlUnknownTarget -->
+{% from 'macros.html' import form_field with context %}
+{% block content %}
+    <a href="{{ url_for('index') }}">&rarr; Return</a>
+    <h2>Upload Form</h2>
+    <form method="post" enctype="multipart/form-data">
+        <!-- 当表单包含文件上传字段时候(即type属性为file的input标签)，需将表单的enctype属性设置为"multipart/form-data",
+             否则只是吧文件名作为表单数据提交，而不是把文件上传-->
+        {{ form.csrf_token }}  <!-- 渲染CSRF令牌隐藏字段(如果没有渲染会验证报错: CSRF token is missing) -->
+        {{ form_field(form.photo) }}
+        {{ form.submit }}
+    </form>
+{% endblock content %}
